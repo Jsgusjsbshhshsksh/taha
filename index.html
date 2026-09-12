@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>نگاره | Negaareh</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    min-height:100%;
+}
+
+body{
+    background:#08090d;
+    color:#fff;
+    font-family:"Lalezar",sans-serif;
+    overflow-x:hidden;
+}
+
+/* پس زمینه */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:-200px;
+    background:
+      radial-gradient(circle at 20% 10%,rgba(120,70,255,.10),transparent 30%),
+      radial-gradient(circle at 90% 30%,rgba(0,200,255,.07),transparent 30%);
+    pointer-events:none;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 22px;
+
+    background:rgba(8,9,13,.82);
+    backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.logo{
+    font-size:28px;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:#9c6cff;
+}
+
+.header-buttons{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.btn{
+    border:0;
+    cursor:pointer;
+    font-family:inherit;
+    color:#fff;
+    background:#151720;
+    border:1px solid #282b36;
+    border-radius:14px;
+    padding:9px 17px;
+    font-size:16px;
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    background:#1d202b;
+}
+
+.upload{
+    background:linear-gradient(135deg,#7957ff,#4e8cff);
+    border:0;
+}
+
+/* NAV */
+
+nav{
+    max-width:1000px;
+    margin:auto;
+
+    display:flex;
+    justify-content:center;
+    gap:10px;
+
+    padding:20px 15px;
+}
+
+.nav-btn{
+    border:0;
+    background:#11131a;
+    color:#777;
+    font-family:inherit;
+    font-size:17px;
+    border-radius:13px;
+    padding:8px 20px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.nav-btn.active,
+.nav-btn:hover{
+    color:#fff;
+    background:#202330;
+}
+
+/* EMPTY STATE */
+
+.empty{
+    min-height:calc(100vh - 150px);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    padding:30px;
+}
+
+.empty-icon{
+    width:92px;
+    height:92px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+        135deg,
+        #1c1b2d,
+        #11131a
+    );
+
+    border:1px solid #292b39;
+
+    font-size:42px;
+
+    margin-bottom:25px;
+
+    animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-7px);
+    }
+
+}
+
+.empty h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.empty p{
+    max-width:500px;
+    color:#777;
+    line-height:2;
+    font-size:17px;
+}
+
+.empty .upload{
+    margin-top:25px;
+}
+
+/* FEED */
+
+.feed{
+    max-width:850px;
+    margin:auto;
+    padding:10px 15px 80px;
+}
+
+.post{
+    background:#101219;
+    border:1px solid #222631;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    margin-bottom:25px;
+
+    animation:postIn .5s ease;
+}
+
+@keyframes postIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.post-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:15px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #704cff,
+        #2d8cff
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.username{
+    font-size:17px;
+}
+
+.time{
+    color:#666;
+    font-size:12px;
+}
+
+.media{
+    width:100%;
+    max-height:850px;
+    background:#050507;
+    display:block;
+}
+
+.post-bottom{
+    padding:15px;
+}
+
+.actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.like{
+    border:0;
+    background:none;
+    color:#aaa;
+    font-family:inherit;
+    font-size:21px;
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.like:hover{
+    transform:scale(1.1);
+}
+
+.like.liked{
+    color:#ff527c;
+}
+
+.likes{
+    color:#aaa;
+    font-size:14px;
+}
+
+.caption{
+    margin-top:10px;
+    color:#ddd;
+    line-height:1.8;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(12px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:500;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(500px,100%);
+
+    background:#11131a;
+
+    border:1px solid #292d38;
+
+    border-radius:24px;
+
+    padding:25px;
+
+    animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+        transform:scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.modal-title{
+    font-size:25px;
+    margin-bottom:20px;
+}
+
+.close{
+    float:left;
+    border:0;
+    background:#20232c;
+    color:#aaa;
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.drop{
+    border:2px dashed #333846;
+
+    border-radius:18px;
+
+    padding:35px 15px;
+
+    text-align:center;
+
+    color:#777;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.drop:hover{
+    border-color:#7459ff;
+    background:#151722;
+}
+
+.drop strong{
+    display:block;
+    color:#ddd;
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+input[type=file]{
+    display:none;
+}
+
+textarea{
+    width:100%;
+    resize:none;
+
+    margin-top:15px;
+
+    height:90px;
+
+    border-radius:14px;
+
+    border:1px solid #303441;
+
+    background:#0b0d12;
+
+    color:white;
+
+    outline:none;
+
+    padding:12px;
+
+    font-family:inherit;
+
+    font-size:15px;
+}
+
+.publish{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:0;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #7655ff,
+        #408fff
+    );
+
+    color:#fff;
+
+    font-family:inherit;
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+.progress{
+    display:none;
+    height:5px;
+    background:#252832;
+    border-radius:10px;
+    margin-top:12px;
+    overflow:hidden;
+}
+
+.progress div{
+    width:0%;
+    height:100%;
+    background:#795aff;
+    transition:.2s;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    header{
+        padding:0 12px;
+    }
+
+    .logo{
+        font-size:23px;
+    }
+
+    .header-buttons .btn:not(.upload){
+        display:none;
+    }
+
+    .empty h1{
+        font-size:29px;
+    }
+
+    .empty p{
+        font-size:15px;
+    }
+
+    .post{
+        border-radius:16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        نِگاره<span>✦</span>
+    </div>
+
+    <div class="header-buttons">
+
+        <button class="btn">
+            ورود
+        </button>
+
+        <button
+            class="btn upload"
+            onclick="openUpload()">
+            ＋ انتشار
+        </button>
+
+    </div>
+
+</header>
+
+<nav>
+
+    <button
+        class="nav-btn active"
+        onclick="changeTab(this)">
+        جدیدترین
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="changeTab(this)">
+        محبوب‌ترین
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="changeTab(this)">
+        ویدیوها
+    </button>
+
+</nav>
+
+<!-- اول سایت کاملاً خالی است -->
+
+<section class="empty" id="empty">
+
+    <div class="empty-icon">
+        ✦
+    </div>
+
+    <h1>
+        هنوز چیزی اینجا نیست
+    </h1>
+
+    <p>
+        نِگاره جایی برای نمایش آثار ساخته‌شده
+        با هوش مصنوعی است.
+        اولین اثر را تو منتشر کن.
+    </p>
+
+    <button
+        class="btn upload"
+        onclick="openUpload()">
+        ＋ انتشار اولین اثر
+    </button>
+
+</section>
+
+<section
+    class="feed"
+    id="feed"
+    style="display:none">
+</section>
+
+
+<!-- UPLOAD MODAL -->
+
+<div
+    class="modal"
+    id="uploadModal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeUpload()">
+            ×
+        </button>
+
+        <div class="modal-title">
+            انتشار اثر
+        </div>
+
+        <label class="drop">
+
+            <strong>
+                تصویر یا ویدیو را انتخاب کن
+            </strong>
+
+            عکس یا ویدیوی ساخته‌شده با
+            هوش مصنوعی را اینجا قرار بده
+
+            <input
+                id="mediaInput"
+                type="file"
+                accept="image/*,video/*"
+                onchange="previewFile()">
+
+        </label>
+
+        <div id="fileName"
+             style="margin-top:10px;color:#777">
+        </div>
+
+        <textarea
+            id="caption"
+            placeholder="توضیحی برای اثرت بنویس...">
+        </textarea>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <button
+            class="publish"
+            onclick="publishPost()">
+            انتشار
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+========================================
+حالت فعلی
+========================================
+
+این قسمت فقط رابط سایت را اجرا می‌کند.
+
+برای آنلاین واقعی باید این موارد
+به بک‌اند وصل شوند:
+
+1. حساب کاربران
+2. Storage عکس و ویدیو
+3. Database پست‌ها
+4. Database لایک‌ها
+5. محدودیت یک لایک برای هر کاربر
+
+هیچ عکس نمونه‌ای داخل برنامه قرار داده نشده.
+*/
+
+
+const empty = document.getElementById("empty");
+const feed = document.getElementById("feed");
+
+const modal = document.getElementById("uploadModal");
+
+const mediaInput =
+    document.getElementById("mediaInput");
+
+const fileName =
+    document.getElementById("fileName");
+
+const caption =
+    document.getElementById("caption");
+
+
+function openUpload(){
+
+    modal.classList.add("show");
+
+}
+
+
+function closeUpload(){
+
+    modal.classList.remove("show");
+
+}
+
+
+function previewFile(){
+
+    const file = mediaInput.files[0];
+
+    if(!file){
+
+        fileName.textContent="";
+
+        return;
+
+    }
+
+    fileName.textContent =
+        "فایل انتخاب‌شده: " + file.name;
+
+}
+
+
+function publishPost(){
+
+    const file =
+        mediaInput.files[0];
+
+    if(!file){
+
+        alert("اول یک عکس یا ویدیو انتخاب کن.");
+
+        return;
+
+    }
+
+    /*
+    محدودیت پیشنهادی سمت سرور:
+
+    تصویر: حداکثر 20MB
+    ویدیو: حداکثر 200MB
+
+    در نسخه آنلاین واقعی این محدودیت
+    در Storage و Backend کنترل می‌شود.
+    */
+
+    const url =
+        URL.createObjectURL(file);
+
+    empty.style.display="none";
+    feed.style.display="block";
+
+    const post =
+        document.createElement("article");
+
+    post.className="post";
+
+    const isVideo =
+        file.type.startsWith("video/");
+
+    post.innerHTML=`
+
+        <div class="post-head">
+
+            <div class="avatar">
+                ✦
+            </div>
+
+            <div>
+
+                <div class="username">
+                    کاربر جدید
+                </div>
+
+                <div class="time">
+                    همین الان
+                </div>
+
+            </div>
+
+        </div>
+
+        ${
+            isVideo
+
+            ?
+
+            `<video
+                class="media"
+                src="${url}"
+                controls
+                playsinline>
+            </video>`
+
+            :
+
+            `<img
+                class="media"
+                src="${url}"
+                alt="اثر منتشر شده">`
+        }
+
+        <div class="post-bottom">
+
+            <div class="actions">
+
+                <button
+                    class="like"
+                    onclick="likePost(this)">
+                    ♡
+                </button>
+
+                <span class="likes">
+                    0 لایک
+                </span>
+
+            </div>
+
+            ${
+                caption.value.trim()
+                ?
+                `<div class="caption">
+                    ${escapeHTML(caption.value)}
+                </div>`
+                :
+                ""
+            }
+
+        </div>
+
+    `;
+
+    feed.prepend(post);
+
+    closeUpload();
+
+    mediaInput.value="";
+    caption.value="";
+    fileName.textContent="";
+
+}
+
+
+function likePost(button){
+
+    /*
+    در نسخه واقعی:
+
+    این عملیات باید به Database برود
+    و با شناسه کاربر کنترل شود.
+
+    UNIQUE(user_id, post_id)
+
+    بنابراین هر کاربر فقط یک لایک
+    برای هر پست خواهد داشت.
+    */
+
+    if(button.classList.contains("liked")){
+
+        return;
+
+    }
+
+    button.classList.add("liked");
+
+    button.textContent="♥";
+
+    const likes =
+        button.parentElement
+        .querySelector(".likes");
+
+    likes.textContent="1 لایک";
+
+}
+
+
+function changeTab(button){
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+}
+
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent=text;
+
+    return div.innerHTML;
+
+}
+
+
+modal.addEventListener(
+    "click",
+    function(e){
+
+        if(e.target === modal){
+            closeUpload();
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
